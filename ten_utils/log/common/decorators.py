@@ -22,7 +22,7 @@ def check_now_log_level(user_level: int):
             args.append(caller_name)
             args = tuple(args)
 
-            if user_level <= now_level:
+            if user_level >= now_level:
                 result = func(*args, **kwargs)
                 return result
 
