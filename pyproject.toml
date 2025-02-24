@@ -6,6 +6,16 @@ build-backend = "setuptools.build_meta"
 name = "ten_utils"
 version = "0.1.0"
 description = "A toolkit for reuse"
-authors = [{ name = "Караваев Александр", email = "234iskateli234@gmail.com" }]
+readme = "README.md"
 license = { file = "LICENSE" }
-dependencies = []
+authors = [{ name = "Караваев Александр", email = "234iskateli234@gmail.com" }]
+dependencies = [
+    "colorama==0.4.6",
+    "termcolor==2.5.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
