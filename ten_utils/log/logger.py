@@ -1,12 +1,12 @@
 from termcolor import colored
 from colorama import init as colorama_init
 
-from .common.constants import (
+from ten_utils.common.constants import (
     LOGGER_LEVELS,
     LOGGER_INFO,
     LOGGER_FORMAT,
 )
-from .common.decorators import check_now_log_level
+from ten_utils.common.decorators import check_now_log_level
 
 
 class Logger:

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ten_utils"
-version = "0.0.7"
+version = "0.0.8"
 description = "A toolkit for reuse"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -21,5 +21,5 @@ dev = ["pytest"]
 packages = [
     "ten_utils",
     "ten_utils.log",
-    "ten_utils.log.common",
+    "ten_utils.common",
 ]
