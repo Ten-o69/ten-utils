@@ -12,7 +12,7 @@ def validate_value_default_level_log(value: Any) -> Literal[0, 1, 2, 3, 4]:
 
 
 def validate_value_save_log_to_file(value: Any) -> bool:
-    if value is not bool:
+    if type(value) is not bool:
         return False
 
     else:
