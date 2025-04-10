@@ -1,3 +1,6 @@
+from rich.theme import Theme
+
+
 # logger
 LOGGER_LEVELS = {
     0: "debug",
@@ -12,3 +15,12 @@ LOGGER_WARNING = 2
 LOGGER_ERROR = 3
 LOGGER_CRITICAL_ERROR = 4
 LOGGER_FORMAT = "[{0}] {1}.{2}: {3}"
+
+# rich
+CONSOLE_THEME = Theme({
+    "debug": "white",
+    "info": "cyan",
+    "warning": "yellow",
+    "error": "red",
+    "critical_error": "bold red",
+})
