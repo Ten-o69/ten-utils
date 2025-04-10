@@ -15,27 +15,27 @@ from ten_utils.log.config import LoggerConfig
 
 class Logger:
     """
-    Logger class for structured, colorized logging with configurable log levels,
-    optional file persistence, and named logger instances.
+    A structured and stylized logger supporting colored console output, log level filtering,
+    and optional file persistence.
 
-    This logger supports five standard logging levels:
+    The Logger provides five logging levels:
         0 - DEBUG
         1 - INFO
         2 - WARNING
         3 - ERROR
         4 - CRITICAL
 
-    The logger level and file output behavior can be configured globally
-    using the LoggerConfig singleton, or overridden per instance.
+    Logging behavior (log level threshold and file saving) can be customized either globally via
+    the LoggerConfig singleton, or per instance.
 
     Attributes:
-        name (str | None): Custom name for the logger (e.g., module or class name).
-        level (int): Minimum level to log (messages below this level are ignored).
-        save_file (bool): Flag indicating whether logs should be written to a file.
-        console (Console): Rich console instance for stylized output.
+        name (str | None): Optional identifier for the logger (e.g., module or class name).
+        level (int): Minimum log level to display; messages below this level will be ignored.
+        save_file (bool): Whether to persist log messages to a file (not yet implemented).
+        console (Console): Rich Console instance used to print styled messages to the terminal.
     """
 
-    logger_level = LOGGER_INFO  # Default logging level set to INFO
+    logger_level = LOGGER_INFO
 
     def __init__(
         self,
@@ -44,14 +44,14 @@ class Logger:
         save_file: bool | None = None,
     ):
         """
-        Initializes a Logger instance, with optional overrides for log level and file saving.
+        Creates a new Logger instance with optional overrides for logging level and file saving behavior.
 
-        If level and save_file are not specified, global defaults are taken from LoggerConfig.
+        If no overrides are given, defaults are taken from the LoggerConfig singleton.
 
         Args:
-            name (str | None): Identifier shown in the log output. Useful for filtering by source.
-            level (int | None): Minimum level of logs to show. Defaults to LoggerConfig setting.
-            save_file (bool | None): If True, logs will also be written to file. Defaults to LoggerConfig setting.
+            name (str | None): Optional label used to tag log output (e.g., a class or module name).
+            level (int | None): Minimum severity level to log. Defaults to the global setting from LoggerConfig.
+            save_file (bool | None): Whether to save logs to a file. Defaults to the global setting from LoggerConfig.
         """
         logger_config = LoggerConfig()
 
@@ -60,185 +60,149 @@ class Logger:
         self.save_file = save_file if save_file is not None else logger_config.get_save_log_to_file()
         self.console = Console(theme=CONSOLE_THEME)
 
+    @staticmethod
+    def __get_caller_name(**kwargs) -> str:
+        """
+        Retrieves the caller name passed in through keyword arguments.
+
+        Keyword Args:
+            caller_name (str): A string indicating the source or context of the log.
+
+        Returns:
+            str: The caller name.
+        """
+        return kwargs["caller_name"]
+
     def __send(
-            self,
-            message: str,
-            name: str,
-            now_log_level: int,
-            additional_info: bool,
+        self,
+        message: str,
+        caller_name: str,
+        now_log_level: int,
+        additional_info: bool,
     ) -> None:
         """
-        Internal method to format and dispatch log messages to the console and optionally to file.
+        Formats and outputs a log message to the console, and optionally to a file.
 
         Args:
             message (str): The log message content.
-            name (str): A tag or source name (e.g., function or component).
-            now_log_level (int): The numeric level of the log (0–4).
-            additional_info (bool): Flag to indicate whether to include full logging information
-                (including date, time, level, logger name, and source).
-
-        Returns:
-            None
+            caller_name (str): Context or identifier of the log message source.
+            now_log_level (int): Numeric representation of the log level (0 to 4).
+            additional_info (bool): Whether to include timestamp, log level, logger name, and source in output.
 
         Side Effects:
-            Outputs the message to console.
-            (Future) Appends to log file if save_file is True.
+            Prints the log message to the console.
+            (Future) Writes the log message to a file if `save_file` is True.
         """
-        # Format log message with current timestamp
         arg_string = (
             datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             LOGGER_LEVELS[now_log_level].upper(),
             self.name,
-            name,
+            caller_name,
             message,
         )
 
-        # Conditionally adjust log format based on whether additional info is requested
-        if not additional_info:
-            logger_format = LOGGER_FORMAT.split(":")[1].strip(" ")
-        else:
-            logger_format = LOGGER_FORMAT
+        logger_format = (
+            LOGGER_FORMAT if additional_info else LOGGER_FORMAT.split(":")[1].strip(" ")
+        )
 
         message = logger_format.format(*arg_string)
         level_style = LOGGER_LEVELS.get(now_log_level, "info")
 
-        # Print the message using Rich's styled console output
         self.console.print(Text(text=message, style=level_style))
 
-        # Optional file output (future implementation)
         if self.save_file:
-            pass
+            pass  # Placeholder for file writing implementation
 
     @check_now_log_level(user_level=0)
     def debug(
-            self,
-            message: str,
-            name: str | None = None,
-            additional_info: bool = True,
+        self,
+        message: str,
+        additional_info: bool = True,
+        **kwargs,
     ) -> None:
         """
-        Logs a debug message. Typically used for development and low-level system info.
+        Logs a debug-level message, typically used for detailed internal or diagnostic output.
 
         Args:
-            message (str): Debug information to log.
-            name (str): Context (e.g., method name or identifier) generating the log.
-            additional_info (bool, optional): If True, logs will include timestamp, log level,
-                logger name, and source. Defaults to True.
-
-        Returns:
-            None
+            message (str): The message to be logged.
+            additional_info (bool, optional): If True, includes metadata like timestamp and source. Defaults to True.
+            **kwargs: Must include 'caller_name' to tag the source of the message.
         """
-        self.__send(
-            message,
-            name,
-            0,  # DEBUG level
-            additional_info,
-        )
+        caller_name = self.__get_caller_name(**kwargs)
+        self.__send(message, caller_name, 0, additional_info)
 
     @check_now_log_level(user_level=1)
     def info(
-            self,
-            message: str,
-            name: str | None = None,
-            additional_info: bool = True,
+        self,
+        message: str,
+        additional_info: bool = True,
+        **kwargs,
     ) -> None:
         """
-        Logs an informational message about normal operations.
+        Logs an informational message used to report general application events or state.
 
         Args:
-            message (str): Informational text.
-            name (str, optional): Optional source/context name.
-            additional_info (bool, optional): If True, logs will include timestamp, log level,
-                logger name, and source. Defaults to True.
-
-        Returns:
-            None
+            message (str): The message to be logged.
+            additional_info (bool, optional): If True, includes metadata like timestamp and source. Defaults to True.
+            **kwargs: Must include 'caller_name' to tag the source of the message.
         """
-        self.__send(
-            message,
-            name,
-            1,  # INFO level
-            additional_info,
-        )
+        caller_name = self.__get_caller_name(**kwargs)
+        self.__send(message, caller_name, 1, additional_info)
 
     @check_now_log_level(user_level=2)
     def warning(
-            self,
-            message: str,
-            name: str | None = None,
-            additional_info: bool = True,
+        self,
+        message: str,
+        additional_info: bool = True,
+        **kwargs,
     ) -> None:
         """
-        Logs a warning message that indicates a potential problem.
+        Logs a warning message that flags unexpected behavior or potential issues.
 
         Args:
-            message (str): Warning text.
-            name (str, optional): Optional context source.
-            additional_info (bool, optional): If True, logs will include timestamp, log level,
-                logger name, and source. Defaults to True.
-
-        Returns:
-            None
+            message (str): The message to be logged.
+            additional_info (bool, optional): If True, includes metadata like timestamp and source. Defaults to True.
+            **kwargs: Must include 'caller_name' to tag the source of the message.
         """
-        self.__send(
-            message,
-            name,
-            2,  # WARNING level
-            additional_info,
-        )
+        caller_name = self.__get_caller_name(**kwargs)
+        self.__send(message, caller_name, 2, additional_info)
 
     @check_now_log_level(user_level=3)
     def error(
-            self,
-            message: str,
-            name: str | None = None,
-            additional_info: bool = True,
+        self,
+        message: str,
+        additional_info: bool = True,
+        **kwargs,
     ) -> None:
         """
-        Logs an error message indicating a failure in processing.
+        Logs an error message indicating a failure in a specific part of the application.
 
         Args:
-            message (str): Error description.
-            name (str, optional): Context of the error.
-            additional_info (bool, optional): If True, logs will include timestamp, log level,
-                logger name, and source. Defaults to True.
-
-        Returns:
-            None
+            message (str): The message to be logged.
+            additional_info (bool, optional): If True, includes metadata like timestamp and source. Defaults to True.
+            **kwargs: Must include 'caller_name' to tag the source of the message.
         """
-        self.__send(
-            message,
-            name,
-            3,  # ERROR level
-            additional_info,
-        )
+        caller_name = self.__get_caller_name(**kwargs)
+        self.__send(message, caller_name, 3, additional_info)
 
     @check_now_log_level(user_level=4)
     def critical(
-            self,
-            message: str,
-            name: str | None = None,
-            additional_info: bool = True,
+        self,
+        message: str,
+        additional_info: bool = True,
+        **kwargs,
     ) -> None:
         """
-        Logs a critical error that may result in application termination.
+        Logs a critical error message that may indicate unrecoverable failure. Exits the program afterward.
 
         Args:
-            message (str): Critical error text.
-            name (str, optional): Optional context (e.g., function name).
-            additional_info (bool, optional): If True, logs will include timestamp, log level,
-                logger name, and source. Defaults to True.
-
-        Returns:
-            None
+            message (str): The message to be logged.
+            additional_info (bool, optional): If True, includes metadata like timestamp and source. Defaults to True.
+            **kwargs: Must include 'caller_name' to tag the source of the message.
 
         Side Effects:
-            Exits the program with code 1.
+            Prints message to console and exits the application with status code 1.
         """
-        self.__send(
-            message,
-            name,
-            4,  # CRITICAL level
-            additional_info,
-        )
+        caller_name = self.__get_caller_name(**kwargs)
+        self.__send(message, caller_name, 4, additional_info)
         exit(1)
