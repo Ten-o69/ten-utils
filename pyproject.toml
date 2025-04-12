@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "ten_utils"
 version = "0.0.9"
-description = "A toolkit for reuse"
+description = "A python library that implements many small tools that are often used in python development."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -13,6 +13,7 @@ authors = [{ name = "Караваев Александр", email = "234iskateli2
 dependencies = [
     "rich==13.9.4",
     "python-dotenv==1.1.0",
+    "pydantic==2.11.3",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
