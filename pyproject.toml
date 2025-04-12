@@ -11,7 +11,8 @@ license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Караваев Александр", email = "234iskateli234@gmail.com" }]
 dependencies = [
-    "rich==13.9.4"
+    "rich==13.9.4",
+    "python-dotenv==1.1.0",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
