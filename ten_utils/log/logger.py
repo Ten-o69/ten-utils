@@ -74,11 +74,11 @@ class Logger:
         return kwargs["caller_name"]
 
     def __send(
-        self,
-        message: str,
-        caller_name: str,
-        now_log_level: int,
-        additional_info: bool,
+            self,
+            message: str,
+            caller_name: str,
+            now_log_level: int,
+            additional_info: bool,
     ) -> None:
         """
         Formats and outputs a log message to the console, and optionally to a file.
@@ -115,10 +115,10 @@ class Logger:
 
     @check_now_log_level(user_level=0)
     def debug(
-        self,
-        message: str,
-        additional_info: bool = True,
-        **kwargs,
+            self,
+            message: str,
+            additional_info: bool = True,
+            **kwargs,
     ) -> None:
         """
         Logs a debug-level message, typically used for detailed internal or diagnostic output.
@@ -133,10 +133,10 @@ class Logger:
 
     @check_now_log_level(user_level=1)
     def info(
-        self,
-        message: str,
-        additional_info: bool = True,
-        **kwargs,
+            self,
+            message: str,
+            additional_info: bool = True,
+            **kwargs,
     ) -> None:
         """
         Logs an informational message used to report general application events or state.
@@ -151,10 +151,10 @@ class Logger:
 
     @check_now_log_level(user_level=2)
     def warning(
-        self,
-        message: str,
-        additional_info: bool = True,
-        **kwargs,
+            self,
+            message: str,
+            additional_info: bool = True,
+            **kwargs,
     ) -> None:
         """
         Logs a warning message that flags unexpected behavior or potential issues.
@@ -169,10 +169,10 @@ class Logger:
 
     @check_now_log_level(user_level=3)
     def error(
-        self,
-        message: str,
-        additional_info: bool = True,
-        **kwargs,
+            self,
+            message: str,
+            additional_info: bool = True,
+            **kwargs,
     ) -> None:
         """
         Logs an error message indicating a failure in a specific part of the application.
@@ -187,10 +187,10 @@ class Logger:
 
     @check_now_log_level(user_level=4)
     def critical(
-        self,
-        message: str,
-        additional_info: bool = True,
-        **kwargs,
+            self,
+            message: str,
+            additional_info: bool = True,
+            **kwargs,
     ) -> None:
         """
         Logs a critical error message that may indicate unrecoverable failure. Exits the program afterward.

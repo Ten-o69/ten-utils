@@ -1,10 +1,7 @@
 from typing import Literal
 
 from ten_utils.common.singleton import Singleton
-from .validators import (
-    validate_value_default_level_log,
-    validate_value_save_log_to_file,
-)
+from ten_utils.common.validators import LoggerConfigValidator
 
 
 class LoggerConfig(metaclass=Singleton):
@@ -27,8 +24,13 @@ class LoggerConfig(metaclass=Singleton):
             - Log level: INFO (1)
             - Save logs to file: False
         """
-        self.__default_level_log: Literal[0, 1, 2, 3, 4] = 1
-        self.__save_log_to_file: bool = False
+        logger_config_values = LoggerConfigValidator(
+            default_level_log=1,
+            save_log_to_file=False,
+        )
+
+        self.__default_level_log: Literal[0, 1, 2, 3, 4] = logger_config_values.default_level_log
+        self.__save_log_to_file: bool = logger_config_values.save_log_to_file
 
     def get_default_level_log(self) -> Literal[0, 1, 2, 3, 4]:
         """
@@ -59,7 +61,12 @@ class LoggerConfig(metaclass=Singleton):
         Raises:
             ValueError: If the value is invalid (validation handled by the validator).
         """
-        self.__default_level_log = validate_value_default_level_log(value)
+        logger_config_values = LoggerConfigValidator(
+            default_level_log=value,
+            save_log_to_file=self.__save_log_to_file,
+        )
+
+        self.__default_level_log = logger_config_values.default_level_log
 
     def set_save_log_to_file(self, value: bool) -> None:
         """
@@ -71,4 +78,9 @@ class LoggerConfig(metaclass=Singleton):
         Raises:
             ValueError: If the value is not a boolean (validated externally).
         """
-        self.__save_log_to_file = validate_value_save_log_to_file(value)
+        logger_config_values = LoggerConfigValidator(
+            default_file_log=self.__default_level_log,
+            save_log_to_file=value,
+        )
+
+        self.__save_log_to_file = logger_config_values.save_log_to_file
