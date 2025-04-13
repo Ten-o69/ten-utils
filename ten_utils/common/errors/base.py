@@ -1,0 +1,1 @@
+class TenUtilsLibError(Exception): pass
