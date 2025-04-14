@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ten_utils"
-version = "0.0.10"
+version = "0.0.11"
 description = "A python library that implements many small tools that are often used in python development."
 readme = "README.md"
 license = "MIT"
@@ -35,6 +35,7 @@ BugTracker = "https://github.com/Ten-o69/ten-utils/issues"
 packages = [
     "ten_utils",
     "ten_utils.log",
+    "ten_utils.env_loader",
     "ten_utils.common",
 ]
 
