@@ -19,7 +19,7 @@ class LoggerConfigValidator(BaseModel):
             - 4: CRITICAL
             This field only accepts one of these five literal values.
 
-        save_log_to_file (bool):
+        save_log_to_file (StrictBool):
             A flag indicating whether logs should also be saved to a file in addition to the console.
 
     Example:
