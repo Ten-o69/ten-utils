@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ten_utils"
-version = "0.0.9"
+version = "0.0.10"
 description = "A python library that implements many small tools that are often used in python development."
 readme = "README.md"
 license = "MIT"
@@ -18,7 +18,6 @@ dependencies = [
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
