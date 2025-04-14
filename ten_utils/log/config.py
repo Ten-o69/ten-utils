@@ -79,7 +79,7 @@ class LoggerConfig(metaclass=Singleton):
             ValueError: If the value is not a boolean (validated externally).
         """
         logger_config_values = LoggerConfigValidator(
-            default_file_log=self.__default_level_log,
+            default_level_log=self.__default_level_log,
             save_log_to_file=value,
         )
 
