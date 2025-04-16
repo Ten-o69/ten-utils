@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Any
 import os
+import json
 
 from dotenv import load_dotenv
 
@@ -86,6 +87,9 @@ class EnvLoader(metaclass=Singleton):
             return self.__convert_var_to_bool(
                 env_value=env_value,
             )
+
+        elif type_env_var is dict:
+            return json.loads(env_value)
 
         try:
             return type_env_var(env_value)
