@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ten_utils"
-version = "0.0.11"
+version = "0.0.12"
 description = "A python library that implements many small tools that are often used in python development."
 readme = "README.md"
 license = "MIT"
@@ -37,6 +37,8 @@ packages = [
     "ten_utils.log",
     "ten_utils.env_loader",
     "ten_utils.common",
+    "ten_utils.common.errors",
+    "ten_utils.common.validators"
 ]
 
 [tool.pytest.ini_options]
