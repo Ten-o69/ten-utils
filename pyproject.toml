@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ten_utils"
-version = "0.0.12"
+version = "0.0.13"
 description = "A python library that implements many small tools that are often used in python development."
 readme = "README.md"
 license = "MIT"
