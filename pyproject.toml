@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools", "wheel", "setuptools_scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "ten_utils"
-version = "0.0.13"
+version = {use_scm_version = true}
 description = "A python library that implements many small tools that are often used in python development."
 readme = "README.md"
 license = "MIT"
