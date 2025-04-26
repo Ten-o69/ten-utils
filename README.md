@@ -11,7 +11,7 @@
 
 ## ✨ Features
 
-- ✅ Structured logging with file support(at the time of version 0.0.10 the file saving functionality has not yet been implemented)
+- ✅ Structured logging with file support(at the time of version 0.0.14 the file saving functionality has not yet been implemented)
 - ✅ Memory-based buffer system
 - ✅ Env file loading with type validation
 - 🛠️ More utilities coming soon...
@@ -95,7 +95,7 @@ logger1.error("An error occurred 1")
 ```
 
 #### Warning:
-> - Logs will not be saved to a file, because at the time of v0.0.10 this is not yet implemented.
+> - Logs will not be saved to a file, because at the time of v0.0.14 this is not yet implemented.
 
 It's also worth talking about the `logger.critical` methods:
 ```python
