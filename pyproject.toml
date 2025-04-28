@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ten_utils"
-version = {use_scm_version = true}
+dynamic = ["version"]
 description = "A python library that implements many small tools that are often used in python development."
 readme = "README.md"
 license = "MIT"
@@ -44,3 +44,8 @@ packages = [
 [tool.pytest.ini_options]
 addopts = "-ra --disable-warnings"
 testpaths = ["tests"]
+
+
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "node-and-date"
