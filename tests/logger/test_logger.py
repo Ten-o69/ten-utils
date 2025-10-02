@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 from ten_utils.log.logger import Logger
 
 
@@ -41,6 +41,5 @@ def test_additional_info_false(logger, mock_console_print):
 
 
 def test_critical_exits(logger):
-    with patch("builtins.exit") as mock_exit:
-        logger.critical("Fatal error", additional_info=True)
-        mock_exit.assert_called_once_with(1)
+    with pytest.raises(Exception):
+        logger.critical("Fatal error", additional_info=True, exception_type=AttributeError)
