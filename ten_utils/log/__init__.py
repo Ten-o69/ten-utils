@@ -1,2 +1,5 @@
 from .logger import Logger
-from .config import LoggerConfig
+
+__all__ = [
+    "Logger",
+]

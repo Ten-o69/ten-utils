@@ -1,16 +1,16 @@
 from datetime import datetime
+from typing import Literal
 
 from rich.console import Console
 from rich.text import Text
 
-from ten_utils.common.constants import (
+from .._common import (
     LOGGER_LEVELS,
     LOGGER_INFO,
     LOGGER_FORMAT,
     CONSOLE_THEME,
+    check_now_log_level
 )
-from ten_utils.common.decorators import check_now_log_level
-from ten_utils.log.config import LoggerConfig
 
 
 class Logger:
@@ -40,7 +40,7 @@ class Logger:
     def __init__(
         self,
         name: str | None = None,
-        level: int | None = None,
+        level: Literal[0, 1, 2, 3, 4] | None = None,
         save_file: bool | None = None,
     ):
         """
@@ -50,14 +50,13 @@ class Logger:
 
         Args:
             name (str | None): Optional label used to tag log output (e.g., a class or module name).
-            level (int | None): Minimum severity level to log. Defaults to the global setting from LoggerConfig.
+            level (Literal[0, 1, 2, 3, 4] | None): Minimum severity level to log. Defaults to the global setting from LoggerConfig.
             save_file (bool | None): Whether to save logs to a file. Defaults to the global setting from LoggerConfig.
         """
-        logger_config = LoggerConfig()
 
         self.name = name
-        self.level = level if level is not None else logger_config.get_default_level_log()
-        self.save_file = save_file if save_file is not None else logger_config.get_save_log_to_file()
+        self.level = level
+        self.save_file = save_file
         self.console = Console(theme=CONSOLE_THEME)
 
     @staticmethod
