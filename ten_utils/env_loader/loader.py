@@ -5,8 +5,8 @@ import json
 
 from dotenv import load_dotenv
 
-from ten_utils.common.validators import EnvLoaderValuesValidator
-from ten_utils.common.errors import (
+from .._validators import EnvLoaderValuesValidator
+from ..errors import (
     FailedLoadEnvVariables,
     FailedConvertTypeEnvVar,
     NotFoundNameEnvVar,
