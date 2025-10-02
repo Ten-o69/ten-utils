@@ -1,11 +1,13 @@
-from .common.singleton import Singleton
+from typing import Any
+
+from .singleton import Singleton
 
 
 class Buffer(metaclass=Singleton):
     def __init__(self):
-        self.__buffer: dict[str, any] = {}
+        self.__buffer: dict[str, Any] = {}
 
-    def set(self, key: str, value: any):
+    def set(self, key: str, value: Any):
         self.__buffer[key] = value
 
     def get(self, key: str):

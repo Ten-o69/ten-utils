@@ -4,12 +4,12 @@ from pathlib import Path
 import pytest
 
 from ten_utils.env_loader import EnvLoader
-from ten_utils.common.errors import (
+from ten_utils import (
+    Singleton,
     FailedLoadEnvVariables,
     FailedConvertTypeEnvVar,
     NotFoundNameEnvVar,
 )
-from ten_utils.common.singleton import Singleton
 
 
 @pytest.fixture(autouse=True)
