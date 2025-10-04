@@ -1,8 +1,8 @@
-from typing import Literal, Any
+from typing import Literal, Any, Callable
 from ._utils import message_to_str
 
 
-def make_log_method(user_level: Literal[0, 1, 2, 3, 4]):
+def make_log_method(user_level: Literal[0, 1, 2, 3, 4]) -> Callable[[Any, bool, Exception], None]:
     """
     Factory function that creates a logging method for a specific log level.
 
@@ -31,7 +31,7 @@ def make_log_method(user_level: Literal[0, 1, 2, 3, 4]):
         Raises:
             Exception: If user_level == 4 and 'exception_type' is specified in kwargs.
         """
-        if user_level >= self.level:
+        if user_level >= self._logger_level:
             caller_name = self._get_caller_name()
             message = message_to_str(*message)
 

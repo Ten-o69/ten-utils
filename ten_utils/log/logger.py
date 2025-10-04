@@ -25,31 +25,52 @@ class Logger:
         3 - ERROR
         4 - CRITICAL
 
+    The logging threshold is controlled by a global class-level setting that can be
+    adjusted with `set_logger_level`. Messages below the current threshold are ignored.
+
     Attributes:
         name (str | None): Optional identifier for the logger (e.g., module or class name).
-        level (int): Minimum log level to display; messages below this level will be ignored.
         save_file (bool | None): Whether to persist log messages to a file (currently not implemented).
         console (Console): Rich Console instance used to print styled messages to the terminal.
     """
 
+    _logger_level: Literal[0, 1, 2, 3, 4] = LOGGER_INFO
+
     def __init__(
         self,
         name: str | None = None,
-        level: Literal[0, 1, 2, 3, 4] = LOGGER_INFO,
         save_file: bool | None = None,
     ):
         """
-        Initialize a new Logger instance with optional overrides for logging level and file saving behavior.
+        Initialize a new Logger instance with optional overrides for file saving behavior.
 
         Args:
             name (str | None): Optional label used to tag log output (e.g., a class or module name).
-            level (Literal[0, 1, 2, 3, 4]): Minimum severity level to log. Defaults to INFO.
             save_file (bool | None): Whether to save logs to a file. Defaults to None.
         """
         self.name = name
-        self.level = level
         self.save_file = save_file
         self.console = Console(theme=CONSOLE_THEME)
+
+    @classmethod
+    def set_logger_level(cls, level: Literal[0, 1, 2, 3, 4] = _logger_level) -> None:
+        """
+        Set the global logging threshold for all logger instances.
+
+        Args:
+            level (Literal[0, 1, 2, 3, 4]): Minimum severity level to display.
+        """
+        cls._logger_level = level
+
+    @classmethod
+    def get_logger_level(cls) -> Literal[0, 1, 2, 3, 4]:
+        """
+        Get the current global logging threshold.
+
+        Returns:
+            Literal[0, 1, 2, 3, 4]: The current minimum severity level.
+        """
+        return cls._logger_level
 
     @staticmethod
     def _get_caller_name() -> str:
