@@ -89,7 +89,7 @@ class Logger:
             self,
             message: str,
             caller_name: str,
-            now_log_level: int,
+            now_log_level: Literal[0, 1, 2, 3, 4],
             additional_info: bool,
     ) -> None:
         """
