@@ -159,24 +159,6 @@ print(buffer.get("token"))
 
 ---
 
-## Project Structure 🗂️
-
-```
-ten-utils/
-├── ten_utils/
-│   ├── log/            # Logger implementation
-│   ├── env_loader/     # Environment loader
-│   ├── _common/        # Constants and common utilities
-│   ├── _validators/    # Validators using Pydantic
-│   ├── errors/         # Custom exceptions
-│   ├── buffer.py       # Singleton buffer
-│   ├── singleton.py    # Singleton metaclass
-│   └── __init__.py
-└── tests/              # Unit tests
-```
-
----
-
 ## Contributing 🤝
 
 We welcome contributions! Please follow these steps:
