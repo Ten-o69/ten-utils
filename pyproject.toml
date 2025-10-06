@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "wheel", "setuptools_scm"]
+requires = ["setuptools<=80.9.0", "wheel==0.45.1", "setuptools_scm<=9.2.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -11,9 +11,9 @@ license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Караваев Александр", email = "234iskateli234@gmail.com" }]
 dependencies = [
-    "rich==13.9.4",
-    "python-dotenv==1.1.0",
-    "pydantic==2.11.3",
+    "rich<=14.1.0",
+    "python-dotenv<=1.1.1",
+    "pydantic<=2.11.10",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -25,7 +25,7 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest"]
+dev = ["pytest<=8.4.2"]
 
 [project.urls]
 Homepage = "https://github.com/Ten-o69/ten-utils"
@@ -34,11 +34,13 @@ BugTracker = "https://github.com/Ten-o69/ten-utils/issues"
 [tool.setuptools]
 packages = [
     "ten_utils",
-    "ten_utils.log",
+    "ten_utils._common",
+    "ten_utils._validators",
     "ten_utils.env_loader",
-    "ten_utils.common",
-    "ten_utils.common.errors",
-    "ten_utils.common.validators"
+    "ten_utils.errors",
+    "ten_utils.log",
+    "ten_utils.buffer",
+    "ten_utils.singleton"
 ]
 
 [tool.pytest.ini_options]
