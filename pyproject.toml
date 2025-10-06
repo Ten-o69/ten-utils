@@ -39,8 +39,6 @@ packages = [
     "ten_utils.env_loader",
     "ten_utils.errors",
     "ten_utils.log",
-    "ten_utils.buffer",
-    "ten_utils.singleton"
 ]
 
 [tool.pytest.ini_options]
